@@ -1,19 +1,21 @@
 package br.edu.unochapeco.jpars.dto;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+
+@Valid
 public class FirstFollowRowDTO {
 
+	@NotBlank(message = "Informe o não terminal")
 	private String naoTerminal;
+	@NotBlank(message = "Informe o não First")
 	private String first;
+	@NotBlank(message = "Informe o não Follow")
 	private String follow;
 
 	public FirstFollowRowDTO() {
 	}
 	
-	public FirstFollowRowDTO(String naoTerminal, String first, String follow) {
-		this.naoTerminal = naoTerminal;
-		this.first = first;
-		this.follow = follow;
-	}
 
 	public String getNaoTerminal() {
 		return naoTerminal;

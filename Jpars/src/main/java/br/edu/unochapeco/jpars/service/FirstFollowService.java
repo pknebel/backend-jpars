@@ -3,15 +3,25 @@ package br.edu.unochapeco.jpars.service;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import br.edu.unochapeco.jpars.modelo.FirstFollow;
 import br.edu.unochapeco.jpars.modelo.FirstFollowRow;
 import br.edu.unochapeco.jpars.modelo.Workflow;
+import br.edu.unochapeco.jpars.repository.WorkflowRepository;
 import br.edu.unochapeco.jpars.util.FirstFollowUtil;
 
+@Service
 public class FirstFollowService {
 
+	@Autowired
+	private WorkflowRepository workflowRepository;
+	
 	//validar a tabela de entrada que o usuario digitou com a tabela que esta definida no workflow
-	public void validarFirstFollow(Workflow workflow, FirstFollow firstFollowEntrada) {
+	public void validarFirstFollow(Integer idWorkflow, FirstFollow firstFollowEntrada) {
+		
+		Workflow workflow = workflowRepository.findWorkflow(idWorkflow); 
 		
 		FirstFollow firstFollow = workflow.getFirstFollow();
 		
