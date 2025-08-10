@@ -1,4 +1,4 @@
-package br.com.unochapeco.pedro.Jpars;
+package br.edu.unochapeco.jpars;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JparsApplication {
 
 	public static void main(String[] args) {
+		
 		SpringApplication.run(JparsApplication.class, args);
 	}
 
