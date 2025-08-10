@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JparsApplication {
 
 	public static void main(String[] args) {
-		
 		SpringApplication.run(JparsApplication.class, args);
 	}
 
