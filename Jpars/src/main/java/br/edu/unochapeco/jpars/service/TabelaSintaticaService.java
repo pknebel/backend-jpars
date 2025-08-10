@@ -2,17 +2,28 @@ package br.edu.unochapeco.jpars.service;
 
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.edu.unochapeco.jpars.dto.TabelaSintaticaEntradaDTO;
+import br.edu.unochapeco.jpars.dto.TabelaSintaticaValueEntradaDTO;
 import br.edu.unochapeco.jpars.modelo.TabelaSintatica;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaColumn;
-import br.edu.unochapeco.jpars.modelo.TabelaSintaticaEntrada;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaRow;
-import br.edu.unochapeco.jpars.modelo.TabelaSintaticaValueEntrada;
 import br.edu.unochapeco.jpars.modelo.Workflow;
+import br.edu.unochapeco.jpars.repository.WorkflowRepository;
 import br.edu.unochapeco.jpars.util.StringUtil;
 
+@Service
 public class TabelaSintaticaService {
 
-	public void validarTabelaSintatica(Workflow workflow, TabelaSintaticaEntrada tabelaSintaticaEntrada) {
+	@Autowired
+	private	WorkflowRepository workflowRepository;
+	
+	public void validarTabelaSintatica(TabelaSintaticaEntradaDTO tabelaSintaticaEntradaDTO) {
+		
+		Integer idWorkflow = tabelaSintaticaEntradaDTO.getIdWorkflow();
+		Workflow workflow = workflowRepository.findWorkflow(idWorkflow);
 		
 		TabelaSintatica tabelaSintatica = workflow.getTabelaSintatica();
 		for (TabelaSintaticaRow tabelaSintaticaRow : tabelaSintatica.getRows()) {
@@ -26,7 +37,7 @@ public class TabelaSintaticaService {
 				int columnIndex = tabelaSintaticaColumn.getIndex();
 				String producao = tabelaSintaticaColumn.getProducao().toString();
 				
-				String producaoEntrada = getTabelaSintaticaValueEntrada(tabelaSintaticaEntrada, rowIndex, columnIndex);
+				String producaoEntrada = getTabelaSintaticaValueEntrada(tabelaSintaticaEntradaDTO, rowIndex, columnIndex);
 				
 				//A producao nao e igual e nao e um Sync entao eu valido.
 				if(!Objects.equals(producao, producaoEntrada) && !tabelaSintaticaColumn.isSync()) {
@@ -36,7 +47,10 @@ public class TabelaSintaticaService {
 		}
 	}
 	
-	public void validarTabelaSintaticaSync(Workflow workflow, TabelaSintaticaEntrada tabelaSintaticaEntrada) {
+	public void validarTabelaSintaticaSync(TabelaSintaticaEntradaDTO tabelaSintaticaEntradaDTO) {
+		
+		Integer idWorkflow = tabelaSintaticaEntradaDTO.getIdWorkflow();
+		Workflow workflow = workflowRepository.findWorkflow(idWorkflow);
 		
 		TabelaSintatica tabelaSintatica = workflow.getTabelaSintatica();
 		for (TabelaSintaticaRow tabelaSintaticaRow : tabelaSintatica.getRows()) {
@@ -49,7 +63,7 @@ public class TabelaSintaticaService {
 					int rowIndex = tabelaSintaticaRow.getIndex();
 					int columnIndex = tabelaSintaticaColumn.getIndex();
 					String sync = tabelaSintaticaColumn.getSync();
-					String syncEntrada = getTabelaSintaticaValueEntrada(tabelaSintaticaEntrada, rowIndex, columnIndex);
+					String syncEntrada = getTabelaSintaticaValueEntrada(tabelaSintaticaEntradaDTO, rowIndex, columnIndex);
 					
 					if(!Objects.equals(sync, syncEntrada)) {
 						String terminal = tabelaSintaticaColumn.getTerminal();
@@ -62,13 +76,13 @@ public class TabelaSintaticaService {
 		
 	}
 	
-	private String getTabelaSintaticaValueEntrada(TabelaSintaticaEntrada tabelaSintaticaEntrada, int rowIndex, int columnIndex) {
+	private String getTabelaSintaticaValueEntrada(TabelaSintaticaEntradaDTO tabelaSintaticaEntradaDTO, int rowIndex, int columnIndex) {
 		
-		for (TabelaSintaticaValueEntrada tabelaSintaticaValueEntrada : tabelaSintaticaEntrada.getValues()) {
+		for (TabelaSintaticaValueEntradaDTO tabelaSintaticaValueEntradaDTO : tabelaSintaticaEntradaDTO.getValues()) {
 			
-			if(tabelaSintaticaValueEntrada.getRowIndex() == rowIndex && 
-			   tabelaSintaticaValueEntrada.getColumnIndex() == columnIndex) {
-				String value = Objects.toString(tabelaSintaticaValueEntrada.getValue(), "");
+			if(tabelaSintaticaValueEntradaDTO.getRowIndex() == rowIndex && 
+			   tabelaSintaticaValueEntradaDTO.getColumnIndex() == columnIndex) {
+				String value = Objects.toString(tabelaSintaticaValueEntradaDTO.getValue(), "");
 				return StringUtil.removerEspacos(value);
 			}
 		}

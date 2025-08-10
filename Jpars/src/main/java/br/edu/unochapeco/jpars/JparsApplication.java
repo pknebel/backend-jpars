@@ -9,5 +9,5 @@ public class JparsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JparsApplication.class, args);
 	}
-
+	
 }

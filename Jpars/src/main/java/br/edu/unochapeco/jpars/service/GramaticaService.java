@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.edu.unochapeco.jpars.modelo.Gramatica;
@@ -13,9 +12,6 @@ import br.edu.unochapeco.jpars.modelo.Workflow;
 import br.edu.unochapeco.jpars.repository.WorkflowRepository;
 import br.edu.unochapeco.jpars.util.GramaticaUtil;
 import br.edu.unochapeco.jpars.util.StringUtil;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import jakarta.websocket.server.PathParam;
 
 @Service
 public class GramaticaService {

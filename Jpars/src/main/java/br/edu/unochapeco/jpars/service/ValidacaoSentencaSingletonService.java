@@ -6,13 +6,20 @@ import java.util.Objects;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
+import br.edu.unochapeco.jpars.dto.EtapaValidacaoSentencaDTO;
 import br.edu.unochapeco.jpars.modelo.ElementoPilha;
-import br.edu.unochapeco.jpars.modelo.EtapaValidacaoSentenca;
 import br.edu.unochapeco.jpars.modelo.Sentenca;
 import br.edu.unochapeco.jpars.modelo.TabelaSintatica;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaProducao;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaRow;
 
+/**
+ * O objeto dessa classe precisa ser um singleton 
+ * para guardar o estado de execucao da validacao da sentenca
+ */
+@Service
 public class ValidacaoSentencaSingletonService {
 	
 	private static final String EPSILON = "&";
@@ -59,12 +66,12 @@ public class ValidacaoSentencaSingletonService {
     	return isTerminal;
 	}
     
-	public EtapaValidacaoSentenca getEtapaValidacaoSentenca() {
+	public EtapaValidacaoSentencaDTO getEtapaValidacaoSentenca() {
 		
 		//retorna a lista de elementos da pilha em uma lista de string
 		List<String> elementosPilha = pilha.stream().map(ElementoPilha::getElemento).collect(Collectors.toList());
 		
-		EtapaValidacaoSentenca etapaValidacaoSentenca = new EtapaValidacaoSentenca();
+		EtapaValidacaoSentencaDTO etapaValidacaoSentenca = new EtapaValidacaoSentencaDTO();
 		etapaValidacaoSentenca.setPilha(elementosPilha);
 		etapaValidacaoSentenca.setSentenca(simbolosSentenca);
 		etapaValidacaoSentenca.setIndexSentenca(indexSentenca);

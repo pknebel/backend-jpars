@@ -1,13 +1,14 @@
-package br.edu.unochapeco.jpars.modelo;
+package br.edu.unochapeco.jpars.dto;
 
 import java.util.List;
 
-public class EtapaValidacaoSentenca {
-
+public class EtapaValidacaoSentencaDTO {
+	
+	private int indexSentenca;
 	private List<String> pilha;
 	private List<String> sentenca;
-	private int indexSentenca;
-
+	private String mensagemSucesso;
+	
 	public List<String> getPilha() {
 		return pilha;
 	}
@@ -32,5 +33,12 @@ public class EtapaValidacaoSentenca {
 		this.indexSentenca = indexSentenca;
 	}
 
+	public String getMensagemSucesso() {
+		return mensagemSucesso;
+	}
+
+	public void setMensagemSucesso(String mensagemSucesso) {
+		this.mensagemSucesso = mensagemSucesso;
+	}
 
 }

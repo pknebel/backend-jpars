@@ -1,15 +1,15 @@
-package br.edu.unochapeco.jpars.modelo;
+package br.edu.unochapeco.jpars.dto;
 
-public class TabelaSintaticaValueEntrada {
+public class TabelaSintaticaValueEntradaDTO {
 
 	private int rowIndex;
 	private int columnIndex;
 	private String value;
 
-	public TabelaSintaticaValueEntrada() {
+	public TabelaSintaticaValueEntradaDTO() {
 	}
 	
-	public TabelaSintaticaValueEntrada(int rowIndex, int columnIndex, String value) {
+	public TabelaSintaticaValueEntradaDTO(int rowIndex, int columnIndex, String value) {
 		this.rowIndex = rowIndex;
 		this.columnIndex = columnIndex;
 		this.value = value;

@@ -2,25 +2,38 @@ package br.edu.unochapeco.jpars.service;
 
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.edu.unochapeco.jpars.dto.EtapaValidacaoSentencaDTO;
 import br.edu.unochapeco.jpars.modelo.ElementoPilha;
-import br.edu.unochapeco.jpars.modelo.EtapaValidacaoSentenca;
 import br.edu.unochapeco.jpars.modelo.Sentenca;
 import br.edu.unochapeco.jpars.modelo.TabelaSintatica;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaColumn;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaProducao;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaRow;
 import br.edu.unochapeco.jpars.modelo.Workflow;
+import br.edu.unochapeco.jpars.repository.WorkflowRepository;
 
+@Service
 public class SentencaService {
 	
-	private ValidacaoSentencaSingletonService sentencaSingletonService = new ValidacaoSentencaSingletonService();
+	@Autowired
+	private ValidacaoSentencaSingletonService sentencaSingletonService;
 	
-	public EtapaValidacaoSentenca iniciarValidacao(Workflow workflow, Sentenca sentenca) {
+	@Autowired
+	private WorkflowRepository workflowRepository;
+	
+	public EtapaValidacaoSentencaDTO iniciarValidacao(Integer idWorkflow, Integer idSentenca) {
+		
+		Workflow workflow = workflowRepository.findWorkflow(idWorkflow);
+		Sentenca sentenca = workflowRepository.findSentencaWorkflow(workflow, idSentenca);
+		
 		sentencaSingletonService.iniciarValidacao(workflow.getTabelaSintatica(), sentenca);
 		return sentencaSingletonService.getEtapaValidacaoSentenca();
 	}
 	
-	public EtapaValidacaoSentenca validarProximoToken() {
+	public EtapaValidacaoSentencaDTO validarProximoToken() {
 		
 		String pilha = sentencaSingletonService.getPilhaValues();
 		String naoTerminal = sentencaSingletonService.getNaoTerminal();
@@ -29,10 +42,13 @@ public class SentencaService {
 		ElementoPilha ultimoElementoPilha = sentencaSingletonService.getUltimoElementoPilha();
 		
 		if(Objects.equals(tokenSentenca, elementoInicioPilha)) {
+			 EtapaValidacaoSentencaDTO etapaValidacaoSentenca = sentencaSingletonService.getEtapaValidacaoSentenca();
 			if(sentencaSingletonService.isErroSentenca()) {
-				throw new RuntimeException("Sentença validada com erros!");
+				etapaValidacaoSentenca.setMensagemSucesso("Sentença validada com erros!");
+			}else {
+				etapaValidacaoSentenca.setMensagemSucesso("Sentença validada com sucesso!");
 			}
-			throw new RuntimeException("Sentença validada com sucesso!");
+			return etapaValidacaoSentenca;
 		}
 		
 		if(ultimoElementoPilha.isTerminal()) {
