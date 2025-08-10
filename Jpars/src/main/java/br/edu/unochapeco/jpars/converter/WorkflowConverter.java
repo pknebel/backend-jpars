@@ -2,6 +2,7 @@ package br.edu.unochapeco.jpars.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.edu.unochapeco.jpars.dto.WorkflowDTO;
 import br.edu.unochapeco.jpars.modelo.Workflow;
@@ -14,12 +15,13 @@ public class WorkflowConverter {
 		
 		for (Workflow workflow : workflows) {
 			
-			WorkflowDTO dto = new WorkflowDTO();
-			dto.setIdWorkflow(workflow.getIdWorkflow());
-			dto.setNivel(workflow.getNivel());
-			dto.setGramatica(workflow.getGramatica().toString());
-			
-			workflowsDTO.add(dto);
+			WorkflowDTO workflowDTO = new WorkflowDTO();
+			workflowDTO.setNivel(workflow.getNivel());
+			workflowDTO.setIdWorkflow(workflow.getIdWorkflow());
+			workflowDTO.setGramatica(workflow.getGramatica().toString());
+			workflowDTO.setPossuiRecursao(Objects.nonNull(workflow.getGramaticaSemRecursao()));
+			workflowDTO.setPossuiFatoracao(Objects.nonNull(workflow.getGramaticaFatorada()));
+			workflowsDTO.add(workflowDTO);
 			
 		}
 		return workflowsDTO;

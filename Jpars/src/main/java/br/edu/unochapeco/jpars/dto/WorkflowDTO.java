@@ -3,10 +3,14 @@ package br.edu.unochapeco.jpars.dto;
 public class WorkflowDTO {
 
 	private int idWorkflow;
-	
+
 	private String nivel;
-	
+
 	private String gramatica;
+
+	private boolean possuiRecursao;
+
+	private boolean possuiFatoracao;
 
 	public int getIdWorkflow() {
 		return idWorkflow;
@@ -31,7 +35,21 @@ public class WorkflowDTO {
 	public void setGramatica(String gramatica) {
 		this.gramatica = gramatica;
 	}
-	
-	
-	
+
+	public boolean isPossuiRecursao() {
+		return possuiRecursao;
+	}
+
+	public void setPossuiRecursao(boolean possuiRecursao) {
+		this.possuiRecursao = possuiRecursao;
+	}
+
+	public boolean isPossuiFatoracao() {
+		return possuiFatoracao;
+	}
+
+	public void setPossuiFatoracao(boolean possuiFatoracao) {
+		this.possuiFatoracao = possuiFatoracao;
+	}
+
 }

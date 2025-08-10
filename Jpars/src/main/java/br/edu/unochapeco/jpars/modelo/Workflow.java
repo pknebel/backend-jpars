@@ -3,6 +3,10 @@ package br.edu.unochapeco.jpars.modelo;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Os workflow que nao possuir gramaticaSemRecursao ou gramaticaFatorada
+ * é só nao alimentar no builder.
+ */
 public class Workflow {
 	
 	private int idWorkflow;
