@@ -27,4 +27,23 @@ public class FirstFollowConverter {
 		}
 		return firstFollow;
 	}
+	
+	public FirstFollowDTO convertToDTO(FirstFollow firstFollow) {
+		
+		FirstFollowDTO firstFollowDTO = new FirstFollowDTO();
+		
+		List<FirstFollowRow> rows = firstFollow.getRows();
+		
+		for (FirstFollowRow firstFollowRow : rows) {
+			
+			FirstFollowRowDTO firstFollowRowDTO = new FirstFollowRowDTO();
+			
+			firstFollowRowDTO.setNaoTerminal(firstFollowRow.getNaoTerminal());
+			firstFollowRowDTO.setFirst(firstFollowRow.getFirst());
+			firstFollowRowDTO.setFollow(firstFollowRow.getFollow());
+
+			firstFollowDTO.addFirstFollowRow(firstFollowRowDTO);
+		}
+		return firstFollowDTO;
+	}
 }

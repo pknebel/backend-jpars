@@ -1,6 +1,7 @@
 package br.edu.unochapeco.jpars.modelo;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Workflow {
 	
@@ -96,5 +97,17 @@ public class Workflow {
 	public void setSentencas(List<Sentenca> sentencas) {
 		this.sentencas = sentencas;
 	}
-
+	
+	public Gramatica getGramaticaLL1() {
+		
+		if(Objects.nonNull(gramaticaFatorada)) {
+			return gramaticaFatorada;
+		}
+		
+		if(Objects.nonNull(gramaticaSemRecursao)) {
+			return gramaticaSemRecursao;
+		}
+		
+		return gramatica;
+	}
 }

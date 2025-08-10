@@ -1,6 +1,8 @@
 package br.edu.unochapeco.jpars.dto;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,6 +16,13 @@ public class FirstFollowDTO {
 
 	@NotEmpty(message = "Informe o First Follow")
 	private List<FirstFollowRowDTO> rows;
+	
+	public void addFirstFollowRow(FirstFollowRowDTO firstFollowRowDTO) {
+		if(Objects.isNull(rows)) {
+			this.rows = new ArrayList<>();
+		}
+		this.rows.add(firstFollowRowDTO);
+	}
 	
 	public List<FirstFollowRowDTO> getRows() {
 		return rows;

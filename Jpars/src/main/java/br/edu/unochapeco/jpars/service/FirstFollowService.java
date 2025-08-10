@@ -71,5 +71,10 @@ public class FirstFollowService {
 		throw new RuntimeException("Não terminal " + naoTerminal + " não encotrado na tabela");
 	}
 	
+	public FirstFollow findFirstFollow(Integer idWorkflow){
+		
+		Workflow workflow = workflowRepository.findWorkflow(idWorkflow);
 	
+		return workflow.getFirstFollow();
+	}
 }
