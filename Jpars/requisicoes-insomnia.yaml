@@ -1,0 +1,581 @@
+type: collection.insomnia.rest/5.0
+name: JPARS
+meta:
+  id: wrk_785d9b1657524c2e94d74649a7706a98
+  created: 1753143514412
+  modified: 1754956126836
+  description: ""
+collection:
+  - url: http://localhost:8080/jpars/workflow
+    name: Find Workflows
+    meta:
+      id: req_1496a2cad40649e8806464ede89e4688
+      created: 1754775289225
+      modified: 1754777333420
+      isPrivate: false
+      description: ""
+      sortKey: -1754775289225
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/gramatica/validar-recursao
+    name: Validar Gramática Recursão
+    meta:
+      id: req_c8c857aeecee42ae9f5e0fa344324646
+      created: 1754777342343
+      modified: 1754778322193
+      isPrivate: false
+      description: ""
+      sortKey: -1754777342343
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        { 
+        	"idWorkflow": 1,
+        	"gramaticaEntrada": "S = a A\nA = i E t S A | i E t S e S A | &\nE = b"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/gramatica/validar-fatoracao
+    name: Validar Gramática Fatoração
+    meta:
+      id: req_424b0a4db48b4ad2a479cb2c51788c3e
+      created: 1754778547826
+      modified: 1754779025931
+      isPrivate: false
+      description: ""
+      sortKey: -1754778547826
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        { 
+        	"idWorkflow": 1,
+        	"gramaticaEntrada": "S = a A\nA = i E t S B | &\nB = e S | &\nE = b"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/first-follow/validar-conjuntos
+    name: Validar First Follow
+    meta:
+      id: req_a6babca8db0443b19ac77c84f59d6b59
+      created: 1754787673207
+      modified: 1754789423378
+      isPrivate: false
+      description: ""
+      sortKey: -1754787673207
+    method: POST
+    body:
+      mimeType: application/json
+      text: |
+        {
+        	"idWorkflow":1,
+          "rows" : [
+        		{
+            	"naoTerminal" : "S",
+            	"first" : "a",
+            	"follow" : "$, e"
+          	}, 
+        		{
+            	"naoTerminal" : "A",
+            	"first" : "i, &",
+            	"follow" : "$, e"
+          	}, 
+        		{
+            	"naoTerminal" : "B",
+            	"first" : "e, &",
+            	"follow" : "$, e"
+          	}, 
+        		{
+            	"naoTerminal" : "E",
+            	"first" : "b",
+            	"follow" : "t"
+          	} 
+        	]
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/gramatica/ll1/1
+    name: Find Gramática LL1
+    meta:
+      id: req_d597e595c0b148dfa5df8cb6b66a0885
+      created: 1754790389376
+      modified: 1754790484085
+      isPrivate: false
+      description: ""
+      sortKey: -1754790389376
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/first-follow/1
+    name: Find First Follow
+    meta:
+      id: req_8ea71c5b2d324178afd8ff979d0ba34e
+      created: 1754791370634
+      modified: 1754791390818
+      isPrivate: false
+      description: ""
+      sortKey: -1754791370634
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/tabela-sintatica/validar
+    name: Valida tabela sintática
+    meta:
+      id: req_37c21a1b14c546f6b4e671e8129d7d24
+      created: 1754792740134
+      modified: 1754793294868
+      isPrivate: false
+      description: ""
+      sortKey: -1754792740134
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	 "idWorkflow":1,
+           "values":[
+              {
+                 "rowIndex":1,
+                 "columnIndex":1,
+                 "value":"S=a A"
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":2,
+                 "value":""
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":3,
+                 "value":"Sync"
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":4,
+                 "value":""
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":6,
+                 "value":"Sync"
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":1,
+                 "value":""
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":2,
+                 "value":"A = i E t S B"
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":3,
+                 "value":"A = &"
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":4,
+                 "value":""
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":6,
+                 "value":"A = &"
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":1,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":2,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":3,
+                 "value":"B = e S"
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":4,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":6,
+                 "value":"B = &"
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":1,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":2,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":3,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":4,
+                 "value":"E = b"
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":6,
+                 "value":""
+              }
+           ]
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/tabela-sintatica/validar-sync
+    name: Valida tabela sintática com recuperação de erros
+    meta:
+      id: req_f8d3a5194a224804a25c80416f304b1a
+      created: 1754792760253
+      modified: 1754793300164
+      isPrivate: false
+      description: ""
+      sortKey: -1754792760253
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	 "idWorkflow":1,
+           "values":[
+              {
+                 "rowIndex":1,
+                 "columnIndex":1,
+                 "value":"S=a A"
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":2,
+                 "value":""
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":3,
+                 "value":"Sync"
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":4,
+                 "value":""
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":1,
+                 "columnIndex":6,
+                 "value":"Sync"
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":1,
+                 "value":""
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":2,
+                 "value":"A = i E t S B"
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":3,
+                 "value":"A = &"
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":4,
+                 "value":""
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":2,
+                 "columnIndex":6,
+                 "value":"A = &"
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":1,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":2,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":3,
+                 "value":"B = e S"
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":4,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":3,
+                 "columnIndex":6,
+                 "value":"B = &"
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":1,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":2,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":3,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":4,
+                 "value":"E = b"
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":5,
+                 "value":""
+              },
+              {
+                 "rowIndex":4,
+                 "columnIndex":6,
+                 "value":""
+              }
+           ]
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/tabela-sintatica/1
+    name: Find Tabela Sintática
+    meta:
+      id: req_b4c6ab58bf6b4812851133fda2351042
+      created: 1754793929337
+      modified: 1754798057063
+      isPrivate: false
+      description: ""
+      sortKey: -1754793929337
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/sentenca/1
+    name: Find Sentenças
+    meta:
+      id: req_9842c05a31354ed88f006f2df89b714c
+      created: 1754798041725
+      modified: 1754798091833
+      isPrivate: false
+      description: ""
+      sortKey: -1754798041725
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/sentenca/iniciar-validacao/1/2
+    name: Iniciar validação sentença
+    meta:
+      id: req_f4ace2395c3842e0975a6bc713452420
+      created: 1754799059339
+      modified: 1754801735613
+      isPrivate: false
+      description: ""
+      sortKey: -1754799059339
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/jpars/sentenca/validar
+    name: Próximo passo validação
+    meta:
+      id: req_30825edcd7bd4af39dd78a3763b83819
+      created: 1754799144989
+      modified: 1754956262348
+      isPrivate: false
+      description: ""
+      sortKey: -1754799144989
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.3.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_3a2feba03712eb244b923c70341ba90bd0a871bb
+    created: 1753143514418
+    modified: 1753143514418
+environments:
+  name: Base Environment
+  meta:
+    id: env_3a2feba03712eb244b923c70341ba90bd0a871bb
+    created: 1753143514417
+    modified: 1753143514417
+    isPrivate: false
