@@ -2,6 +2,7 @@ package br.edu.unochapeco.jpars.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import br.edu.unochapeco.jpars.service.TabelaSintaticaService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("tabela-sintatica")
 public class TabelaSintaticaController {
