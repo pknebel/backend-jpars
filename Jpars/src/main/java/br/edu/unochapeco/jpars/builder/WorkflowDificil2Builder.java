@@ -14,10 +14,10 @@ import br.edu.unochapeco.jpars.modelo.TabelaSintaticaProducao;
 import br.edu.unochapeco.jpars.modelo.TabelaSintaticaRow;
 import br.edu.unochapeco.jpars.modelo.Workflow;
 
-public class WorkflowDificil1Builder {
+public class WorkflowDificil2Builder {
 
-	public Workflow build() {
-		Workflow workflow = new Workflow(5, "Difícil");
+    public Workflow build() {
+		Workflow workflow = new Workflow(6, "Difícil");
 		workflow.setGramatica(getGramatica());
 		workflow.setSentencas(getSentencas());
 		workflow.setFirstFollow(getFirstFollow());
