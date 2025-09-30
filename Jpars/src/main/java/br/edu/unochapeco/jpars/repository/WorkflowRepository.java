@@ -21,12 +21,12 @@ public class WorkflowRepository {
 	private List<Workflow> workflows = new ArrayList<>();
 	
 	public WorkflowRepository() {
-		workflows.add(new WorkflowDificil1Builder().build());
-		workflows.add(new WorkflowDificil2Builder().build());
 		workflows.add(new WorkflowFacil1Builder().build());
 		workflows.add(new WorkflowFacil2Builder().build());
 		workflows.add(new WorkflowIntermediario1Builder().build());
 		workflows.add(new WorkflowIntermediario2Builder().build());
+		workflows.add(new WorkflowDificil1Builder().build());
+		workflows.add(new WorkflowDificil2Builder().build());
 	}
 
 	public List<Workflow> findWorkflows() {
