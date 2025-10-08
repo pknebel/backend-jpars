@@ -54,4 +54,13 @@ public class GramaticaController {
 		
 		return ResponseEntity.ok(gramaticaLL1.toString());
 	}
+
+	@GetMapping("sem-recursao/{idWorkflow}")
+	public ResponseEntity<String> findGramaticaSemRecursao(@Valid @NotNull(message = "ID do Workflow é obrigatório") @PathVariable("idWorkflow") Integer idWorkflow){
+		
+		Gramatica gramaticaSemRecursao = gramaticaService.findGramaticaSemRecursao(idWorkflow);
+		
+		return ResponseEntity.ok(gramaticaSemRecursao.toString());
+	}
+
 }

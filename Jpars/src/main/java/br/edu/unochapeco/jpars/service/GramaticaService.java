@@ -95,4 +95,10 @@ public class GramaticaService {
 		
 		return workflow.getGramaticaLL1();
 	}
+
+	public Gramatica findGramaticaSemRecursao(Integer idWorkflow){
+		Workflow workflow = workflowRepository.findWorkflow(idWorkflow);
+		
+		return workflow.getGramaticaSemRecursao();
+	}
 }
