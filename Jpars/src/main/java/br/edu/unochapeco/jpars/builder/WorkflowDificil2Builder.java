@@ -55,20 +55,20 @@ public class WorkflowDificil2Builder {
 		Gramatica gramatica = new Gramatica();
 
 		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("T E'");
+		gramaticaProducao.setTransicao("T A");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
-		gramaticaProducao = new GramaticaProducao("E'");
-		gramaticaProducao.setTransicao("+ T E'");
+		gramaticaProducao = new GramaticaProducao("A");
+		gramaticaProducao.setTransicao("+ T A");
 		gramaticaProducao.setTransicao("&");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
 		gramaticaProducao = new GramaticaProducao("T");
-		gramaticaProducao.setTransicao("F T'");
+		gramaticaProducao.setTransicao("F B");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
-		gramaticaProducao = new GramaticaProducao("T'");
-		gramaticaProducao.setTransicao("* F T'");
+		gramaticaProducao = new GramaticaProducao("B");
+		gramaticaProducao.setTransicao("* F B");
 		gramaticaProducao.setTransicao("&");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 
@@ -84,9 +84,9 @@ public class WorkflowDificil2Builder {
 		
 		FirstFollow firstFollow = new FirstFollow();
 		firstFollow.addFirstFollowRow(new FirstFollowRow("E", "(, id", "$, )"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("E'", "+, &", "$, )"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("A", "+, &", "$, )"));
 		firstFollow.addFirstFollowRow(new FirstFollowRow("T", "(, id", "$, +, )"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("T'", "*, &", "$, +, )"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("B", "*, &", "$, +, )"));
 		firstFollow.addFirstFollowRow(new FirstFollowRow("F", "(, id", "$, *, +, )"));
 		
 		return firstFollow;
@@ -98,42 +98,42 @@ public class WorkflowDificil2Builder {
 		TabelaSintaticaRow tabelaSintaticaRow;
 		
 		tabelaSintaticaRow = new TabelaSintaticaRow(1, "E");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id", new TabelaSintaticaProducao("E", "T", "E'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id", new TabelaSintaticaProducao("E", "T", "A")));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+"));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "(", new TabelaSintaticaProducao("E", "T", "E'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "(", new TabelaSintaticaProducao("E", "T", "A")));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")").withSync());
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(2, "E'");
+		tabelaSintaticaRow = new TabelaSintaticaRow(2, "A");
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+", new TabelaSintaticaProducao("E'", "+", "T", "E'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+", new TabelaSintaticaProducao("A", "+", "T", "A")));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*"));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "("));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")", new TabelaSintaticaProducao("E'", "&")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("E'", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")", new TabelaSintaticaProducao("A", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("A", "&")));
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
 		tabelaSintaticaRow = new TabelaSintaticaRow(3, "T");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id", new TabelaSintaticaProducao("T", "F", "T'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id", new TabelaSintaticaProducao("T", "F", "B")));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+").withSync());
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "(", new TabelaSintaticaProducao("T", "F", "T'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "(", new TabelaSintaticaProducao("T", "F", "B")));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")").withSync());
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(4, "T'");
+		tabelaSintaticaRow = new TabelaSintaticaRow(4, "B");
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+",new TabelaSintaticaProducao("T'", "&")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*",new TabelaSintaticaProducao("T'", "*", "F", "T'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+",new TabelaSintaticaProducao("B", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*",new TabelaSintaticaProducao("B", "*", "F", "B")));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "("));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")", new TabelaSintaticaProducao("T'", "&")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("T'", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")", new TabelaSintaticaProducao("B", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("B", "&")));
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 
-		tabelaSintaticaRow = new TabelaSintaticaRow(4, "F");
+		tabelaSintaticaRow = new TabelaSintaticaRow(5, "F");
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id",new TabelaSintaticaProducao("F", "id")));
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+").withSync());
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*").withSync());
