@@ -22,39 +22,11 @@ public class WorkflowFacil1Builder {
 		workflow.setSentencas(getSentencas());
 		workflow.setFirstFollow(getFirstFollow());
 		workflow.setTabelaSintatica(getTabelaSintatica());
-		workflow.setGramaticaFatorada(getGramaticaFatorada());
-		workflow.setGramaticaSemRecursao(getGramaticaSemRecursao());
 		return workflow;
 	}
 
 	private Gramatica getGramatica() {
 
-		GramaticaProducao gramaticaProducao;
-		Gramatica gramatica = new Gramatica();
-
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("( S ) S");
-		gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		return gramatica;
-	}
-
-	public Gramatica getGramaticaSemRecursao() {
-
-		GramaticaProducao gramaticaProducao;
-		Gramatica gramatica = new Gramatica();
-		
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("( S ) S");
-		gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		return gramatica;
-	}
-
-	public Gramatica getGramaticaFatorada() {
-		
 		GramaticaProducao gramaticaProducao;
 		Gramatica gramatica = new Gramatica();
 

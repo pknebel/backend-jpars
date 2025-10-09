@@ -22,47 +22,11 @@ public class WorkflowFacil2Builder {
 		workflow.setSentencas(getSentencas());
 		workflow.setFirstFollow(getFirstFollow());
 		workflow.setTabelaSintatica(getTabelaSintatica());
-		workflow.setGramaticaFatorada(getGramaticaFatorada());
-		workflow.setGramaticaSemRecursao(getGramaticaSemRecursao());
 		return workflow;
 	}
 
 	private Gramatica getGramatica() {
 
-		GramaticaProducao gramaticaProducao;
-		Gramatica gramatica = new Gramatica();
-
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("id A");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-
-		gramaticaProducao = new GramaticaProducao("A");
-		gramaticaProducao.setTransicao(", id A");
-        gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		return gramatica;
-	}
-
-	public Gramatica getGramaticaSemRecursao() {
-
-		GramaticaProducao gramaticaProducao;
-		Gramatica gramatica = new Gramatica();
-
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("id A");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-
-		gramaticaProducao = new GramaticaProducao("A");
-		gramaticaProducao.setTransicao(", id A");
-        gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		return gramatica;
-	}
-
-	public Gramatica getGramaticaFatorada() {
-		
 		GramaticaProducao gramaticaProducao;
 		Gramatica gramatica = new Gramatica();
 

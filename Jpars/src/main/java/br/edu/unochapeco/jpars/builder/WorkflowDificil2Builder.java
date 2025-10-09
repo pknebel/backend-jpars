@@ -22,7 +22,6 @@ public class WorkflowDificil2Builder {
 		workflow.setSentencas(getSentencas());
 		workflow.setFirstFollow(getFirstFollow());
 		workflow.setTabelaSintatica(getTabelaSintatica());
-		workflow.setGramaticaFatorada(getGramaticaFatorada());
 		workflow.setGramaticaSemRecursao(getGramaticaSemRecursao());
 		return workflow;
 	}
@@ -32,14 +31,19 @@ public class WorkflowDificil2Builder {
 		GramaticaProducao gramaticaProducao;
 		Gramatica gramatica = new Gramatica();
 
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("S i E t S");
-		gramaticaProducao.setTransicao("S i E t S e S");
-		gramaticaProducao.setTransicao("a");
+		gramaticaProducao = new GramaticaProducao("E");
+		gramaticaProducao.setTransicao("E + T");
+		gramaticaProducao.setTransicao("T");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 
-		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
+		gramaticaProducao = new GramaticaProducao("T");
+		gramaticaProducao.setTransicao("T * F");
+		gramaticaProducao.setTransicao("F");
+		gramatica.addGramaticaProducao(gramaticaProducao);
+
+		gramaticaProducao = new GramaticaProducao("F");
+		gramaticaProducao.setTransicao("( E )");
+		gramaticaProducao.setTransicao("id");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
 		return gramatica;
@@ -50,44 +54,27 @@ public class WorkflowDificil2Builder {
 		GramaticaProducao gramaticaProducao;
 		Gramatica gramatica = new Gramatica();
 
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("a A");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		gramaticaProducao = new GramaticaProducao("A");
-		gramaticaProducao.setTransicao("i E t S A");
-		gramaticaProducao.setTransicao("i E t S e S A");
-		gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
 		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
+		gramaticaProducao.setTransicao("T E'");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
-		return gramatica;
-	}
-
-	public Gramatica getGramaticaFatorada() {
-		
-		GramaticaProducao gramaticaProducao;
-		Gramatica gramatica = new Gramatica();
-
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("a A");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		gramaticaProducao = new GramaticaProducao("A");
-		gramaticaProducao.setTransicao("i E t S B");
+		gramaticaProducao = new GramaticaProducao("E'");
+		gramaticaProducao.setTransicao("+ T E'");
 		gramaticaProducao.setTransicao("&");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
-		gramaticaProducao = new GramaticaProducao("B");
-		gramaticaProducao.setTransicao("e S");
-		gramaticaProducao.setTransicao("&");
+		gramaticaProducao = new GramaticaProducao("T");
+		gramaticaProducao.setTransicao("F T'");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
-		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
+		gramaticaProducao = new GramaticaProducao("T'");
+		gramaticaProducao.setTransicao("* F T'");
+		gramaticaProducao.setTransicao("&");
+		gramatica.addGramaticaProducao(gramaticaProducao);
+
+		gramaticaProducao = new GramaticaProducao("F");
+		gramaticaProducao.setTransicao("( E )");
+		gramaticaProducao.setTransicao("id");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
 		return gramatica;
@@ -96,10 +83,11 @@ public class WorkflowDificil2Builder {
 	public FirstFollow getFirstFollow() {
 		
 		FirstFollow firstFollow = new FirstFollow();
-		firstFollow.addFirstFollowRow(new FirstFollowRow("S", "a", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("A", "i, &", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("B", "e, &", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("E", "b", "t"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("E", "(, id", "$, )"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("E'", "+, &", "$, )"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("T", "(, id", "$, +, )"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("T'", "*, &", "$, +, )"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("F", "(, id", "$, *, +, )"));
 		
 		return firstFollow;
 	}
@@ -109,50 +97,59 @@ public class WorkflowDificil2Builder {
 		TabelaSintatica tabelaSintatica = new TabelaSintatica();
 		TabelaSintaticaRow tabelaSintaticaRow;
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(1, "S");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a", new TabelaSintaticaProducao("S", "a", "A")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e").withSync());
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
+		tabelaSintaticaRow = new TabelaSintaticaRow(1, "E");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id", new TabelaSintaticaProducao("E", "T", "E'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "(", new TabelaSintaticaProducao("E", "T", "E'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")").withSync());
 		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(2, "A");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i", new TabelaSintaticaProducao("A", "i", "E", "t", "S", "B")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e", new TabelaSintaticaProducao("A", "&")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("A", "&")));
+		tabelaSintaticaRow = new TabelaSintaticaRow(2, "E'");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+", new TabelaSintaticaProducao("E'", "+", "T", "E'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "("));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")", new TabelaSintaticaProducao("E'", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("E'", "&")));
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(3, "B");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e", new TabelaSintaticaProducao("B", "e", "S")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("B", "&")));
+		tabelaSintaticaRow = new TabelaSintaticaRow(3, "T");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id", new TabelaSintaticaProducao("T", "F", "T'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "(", new TabelaSintaticaProducao("T", "F", "T'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(4, "E");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b",new TabelaSintaticaProducao("E", "b")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$"));
+		tabelaSintaticaRow = new TabelaSintaticaRow(4, "T'");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+",new TabelaSintaticaProducao("T'", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*",new TabelaSintaticaProducao("T'", "*", "F", "T'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "("));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")", new TabelaSintaticaProducao("T'", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("T'", "&")));
+		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
+
+		tabelaSintaticaRow = new TabelaSintaticaRow(4, "F");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "id",new TabelaSintaticaProducao("F", "id")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "+").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "*").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "(",new TabelaSintaticaProducao("F", "(", "E", ")")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ")").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
 		return tabelaSintatica;
 	}
 	
 	public List<Sentenca> getSentencas() {
-		return Arrays.asList(new Sentenca(1, "a", "i", "b", "t", "a", "e", "a"),
-				             new Sentenca(2, "i", "b", "t", "a", "e", "a"),
-				             new Sentenca(3, "e", "p", "s", "i", "l", "o", "n"),
-				             new Sentenca(4, "a", "i", "b", "a", "t", "a", "e", "a"));
+		return Arrays.asList(new Sentenca(1, "id", "+", "id", "*", "id"),
+				             new Sentenca(2, "id", "+", "id"),
+				             new Sentenca(3, "id", "+", "(", "id", "*", "id", ")"),
+				             new Sentenca(4, "id", "+", "id", "*", "id", ")"));
 		
 	}
 }

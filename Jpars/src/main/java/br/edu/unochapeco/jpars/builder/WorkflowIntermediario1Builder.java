@@ -22,7 +22,6 @@ public class WorkflowIntermediario1Builder {
 		workflow.setSentencas(getSentencas());
 		workflow.setFirstFollow(getFirstFollow());
 		workflow.setTabelaSintatica(getTabelaSintatica());
-		workflow.setGramaticaFatorada(getGramaticaFatorada());
 		workflow.setGramaticaSemRecursao(getGramaticaSemRecursao());
 		return workflow;
 	}
@@ -67,32 +66,6 @@ public class WorkflowIntermediario1Builder {
 		return gramatica;
 	}
 
-	public Gramatica getGramaticaFatorada() {
-		
-		GramaticaProducao gramaticaProducao;
-		Gramatica gramatica = new Gramatica();
-
-		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("a A");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		gramaticaProducao = new GramaticaProducao("A");
-		gramaticaProducao.setTransicao("i E t S B");
-		gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		gramaticaProducao = new GramaticaProducao("B");
-		gramaticaProducao.setTransicao("e S");
-		gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		return gramatica;
-	}
-	
 	public FirstFollow getFirstFollow() {
 		
 		FirstFollow firstFollow = new FirstFollow();
