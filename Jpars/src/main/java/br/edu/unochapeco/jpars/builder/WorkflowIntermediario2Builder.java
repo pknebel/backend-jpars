@@ -32,15 +32,17 @@ public class WorkflowIntermediario2Builder {
 		Gramatica gramatica = new Gramatica();
 
 		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("S i E t S");
-		gramaticaProducao.setTransicao("S i E t S e S");
-		gramaticaProducao.setTransicao("a");
+		gramaticaProducao.setTransicao("A class id;");
+		gramaticaProducao.setTransicao("A class { }");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 
-		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
+		gramaticaProducao = new GramaticaProducao("A");
+		gramaticaProducao.setTransicao("public");
+		gramaticaProducao.setTransicao("private");
+		gramaticaProducao.setTransicao("protected");
+		gramaticaProducao.setTransicao("&");
 		gramatica.addGramaticaProducao(gramaticaProducao);
-		
+
 		return gramatica;
 	}
 
@@ -50,33 +52,30 @@ public class WorkflowIntermediario2Builder {
 		Gramatica gramatica = new Gramatica();
 
 		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("a A");
+		gramaticaProducao.setTransicao("A class id B");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
 		gramaticaProducao = new GramaticaProducao("A");
-		gramaticaProducao.setTransicao("i E t S B");
+		gramaticaProducao.setTransicao("public");
+		gramaticaProducao.setTransicao("private");
+		gramaticaProducao.setTransicao("protected");
 		gramaticaProducao.setTransicao("&");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
 		gramaticaProducao = new GramaticaProducao("B");
-		gramaticaProducao.setTransicao("e S");
+		gramaticaProducao.setTransicao("{ }");
 		gramaticaProducao.setTransicao("&");
 		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
+
 		return gramatica;
 	}
 	
 	public FirstFollow getFirstFollow() {
 		
 		FirstFollow firstFollow = new FirstFollow();
-		firstFollow.addFirstFollowRow(new FirstFollowRow("S", "a", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("A", "i, &", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("B", "e, &", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("E", "b", "t"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("S", "public, private, protected, class", "$"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("A", "public, private, protected, &", "$, class"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("B", "{, &", "$"));
 		
 		return firstFollow;
 	}
@@ -87,41 +86,38 @@ public class WorkflowIntermediario2Builder {
 		TabelaSintaticaRow tabelaSintaticaRow;
 		
 		tabelaSintaticaRow = new TabelaSintaticaRow(1, "S");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a", new TabelaSintaticaProducao("S", "a", "A")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e").withSync());
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "public", new TabelaSintaticaProducao("S", "A", "class", "id", "B")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "private", new TabelaSintaticaProducao("S", "A", "class", "id", "B")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "protected", new TabelaSintaticaProducao("S", "A", "class", "id", "B")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "class", new TabelaSintaticaProducao("S", "A", "class", "id", "B")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "{"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(7, "}"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(8, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
 		tabelaSintaticaRow = new TabelaSintaticaRow(2, "A");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i", new TabelaSintaticaProducao("A", "i", "E", "t", "S", "B")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e", new TabelaSintaticaProducao("A", "&")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("A", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "public", new TabelaSintaticaProducao("A", "public")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "private", new TabelaSintaticaProducao("A", "private")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "protected", new TabelaSintaticaProducao("A", "protected")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "class", new TabelaSintaticaProducao("A", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "{"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(7, "}"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(8, "$"));
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
 		tabelaSintaticaRow = new TabelaSintaticaRow(3, "B");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e", new TabelaSintaticaProducao("B", "e", "S")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("B", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "public"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "private"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "protected"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "class"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "{", new TabelaSintaticaProducao("B", "{", "}")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(7, "}", new TabelaSintaticaProducao("B", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(8, "$"));
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
-		
-		tabelaSintaticaRow = new TabelaSintaticaRow(4, "E");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b",new TabelaSintaticaProducao("E", "b")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$"));
-		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
-		
+
 		return tabelaSintatica;
 	}
 	

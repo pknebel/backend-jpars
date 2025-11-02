@@ -32,13 +32,18 @@ public class WorkflowIntermediario1Builder {
 		Gramatica gramatica = new Gramatica();
 
 		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("S i E t S");
-		gramaticaProducao.setTransicao("S i E t S e S");
-		gramaticaProducao.setTransicao("a");
+		gramaticaProducao.setTransicao("T L ;");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 
-		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
+		gramaticaProducao = new GramaticaProducao("T");
+		gramaticaProducao.setTransicao("int");
+		gramaticaProducao.setTransicao("float");
+		gramaticaProducao.setTransicao("boolean");
+		gramatica.addGramaticaProducao(gramaticaProducao);
+
+		gramaticaProducao = new GramaticaProducao("L");
+		gramaticaProducao.setTransicao("L, id");
+		gramaticaProducao.setTransicao("id");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
 		return gramatica;
@@ -50,17 +55,22 @@ public class WorkflowIntermediario1Builder {
 		Gramatica gramatica = new Gramatica();
 
 		gramaticaProducao = new GramaticaProducao("S");
-		gramaticaProducao.setTransicao("a A");
+		gramaticaProducao.setTransicao("T L ;");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
-		gramaticaProducao = new GramaticaProducao("A");
-		gramaticaProducao.setTransicao("i E t S A");
-		gramaticaProducao.setTransicao("i E t S e S A");
+		gramaticaProducao = new GramaticaProducao("T");
+		gramaticaProducao.setTransicao("int");
+		gramaticaProducao.setTransicao("float");
+		gramaticaProducao.setTransicao("boolean");
+		gramatica.addGramaticaProducao(gramaticaProducao);
+		
+		gramaticaProducao = new GramaticaProducao("L");
+		gramaticaProducao.setTransicao("id U");
+		gramatica.addGramaticaProducao(gramaticaProducao);
+
+		gramaticaProducao = new GramaticaProducao("U");
+		gramaticaProducao.setTransicao(", id U");
 		gramaticaProducao.setTransicao("&");
-		gramatica.addGramaticaProducao(gramaticaProducao);
-		
-		gramaticaProducao = new GramaticaProducao("E");
-		gramaticaProducao.setTransicao("b");
 		gramatica.addGramaticaProducao(gramaticaProducao);
 		
 		return gramatica;
@@ -69,10 +79,10 @@ public class WorkflowIntermediario1Builder {
 	public FirstFollow getFirstFollow() {
 		
 		FirstFollow firstFollow = new FirstFollow();
-		firstFollow.addFirstFollowRow(new FirstFollowRow("S", "a", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("A", "i, &", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("B", "e, &", "$, e"));
-		firstFollow.addFirstFollowRow(new FirstFollowRow("E", "b", "t"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("S", "int, float, boolean", "$"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("T", "int, float, boolean", "$, id"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("L", "id", "$, ;"));
+		firstFollow.addFirstFollowRow(new FirstFollowRow("U", ", &", "$, ;"));
 		
 		return firstFollow;
 	}
@@ -83,49 +93,52 @@ public class WorkflowIntermediario1Builder {
 		TabelaSintaticaRow tabelaSintaticaRow;
 		
 		tabelaSintaticaRow = new TabelaSintaticaRow(1, "S");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a", new TabelaSintaticaProducao("S", "a", "A")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e").withSync());
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "int", new TabelaSintaticaProducao("S", "T", "L", ";")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "float", new TabelaSintaticaProducao("S", "T", "L", ";")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "boolean", new TabelaSintaticaProducao("S", "T", "L", ";")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ","));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, ";"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(7, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(2, "A");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i", new TabelaSintaticaProducao("A", "i", "E", "t", "S", "B")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e", new TabelaSintaticaProducao("A", "&")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("A", "&")));
+		tabelaSintaticaRow = new TabelaSintaticaRow(2, "T");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "int", new TabelaSintaticaProducao("T", "int")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "float", new TabelaSintaticaProducao("T", "float")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "boolean", new TabelaSintaticaProducao("T", "boolean")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "id").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ","));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, ";"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(7, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(3, "B");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e", new TabelaSintaticaProducao("B", "e", "S")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$", new TabelaSintaticaProducao("B", "&")));
+		tabelaSintaticaRow = new TabelaSintaticaRow(3, "L");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "int", new TabelaSintaticaProducao("L", "id", "L'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "float"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "boolean"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ","));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, ";").withSync());
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(7, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
-		tabelaSintaticaRow = new TabelaSintaticaRow(4, "E");
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "a"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "i"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "e"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "b",new TabelaSintaticaProducao("E", "b")));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, "t"));
-		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, "$"));
+		tabelaSintaticaRow = new TabelaSintaticaRow(4, "U");
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(1, "int", new TabelaSintaticaProducao("U", ",", "id", "L'")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(2, "float"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(3, "boolean"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(4, "id"));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(5, ","));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(6, ";", new TabelaSintaticaProducao("U", "&")));
+		tabelaSintaticaRow.addColumn(new TabelaSintaticaColumn(7, "$").withSync());
 		tabelaSintatica.addTabelaSintaticaRow(tabelaSintaticaRow);
 		
 		return tabelaSintatica;
 	}
 	
 	public List<Sentenca> getSentencas() {
-		return Arrays.asList(new Sentenca(1, "a", "i", "b", "t", "a", "e", "a"),
-				             new Sentenca(2, "i", "b", "t", "a", "e", "a"),
-				             new Sentenca(3, "e", "p", "s", "i", "l", "o", "n"),
-				             new Sentenca(4, "a", "i", "b", "a", "t", "a", "e", "a"));
+		return Arrays.asList(new Sentenca(1, "int", "id", ",", "id", ";"),
+				             new Sentenca(2, "boolean", "id", ",", ";"),
+				             new Sentenca(3, "float", ";"));
 		
 	}
 }
